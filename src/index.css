@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* AI Meeting Summarizer Design System - Dark Theme */
+
+@layer base {
+  :root {
+    /* Dark theme color palette */
+    --background: 220 27% 8%;
+    --foreground: 220 9% 95%;
+    
+    /* Surface colors */
+    --surface: 220 20% 12%;
+    --surface-elevated: 220 18% 16%;
+    --surface-hover: 220 22% 18%;
+
+    /* Card and UI elements */
+    --card: 220 20% 12%;
+    --card-foreground: 220 9% 95%;
+
+    --popover: 220 18% 16%;
+    --popover-foreground: 220 9% 95%;
+
+    /* Primary - Vibrant Blue */
+    --primary: 217 91% 60%;
+    --primary-hover: 217 91% 65%;
+    --primary-foreground: 220 27% 8%;
+
+    /* Secondary */
+    --secondary: 220 18% 16%;
+    --secondary-foreground: 220 9% 85%;
+
+    /* Muted colors */
+    --muted: 220 16% 14%;
+    --muted-foreground: 220 9% 65%;
+
+    /* Accent */
+    --accent: 220 18% 16%;
+    --accent-foreground: 220 9% 95%;
+
+    /* Status colors */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 220 9% 95%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 220 9% 95%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 220 27% 8%;
+
+    /* Borders and inputs */
+    --border: 220 16% 18%;
+    --input: 220 18% 16%;
+    --ring: 217 91% 60%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(217 91% 65%));
+    --gradient-surface: linear-gradient(135deg, hsl(220 20% 12%), hsl(220 18% 16%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 27% 8%), hsl(220 20% 12%));
+
+    /* Shadows */
+    --shadow-primary: 0 10px 40px -10px hsl(217 91% 60% / 0.3);
+    --shadow-card: 0 8px 32px -8px hsl(220 27% 4% / 0.5);
+    --shadow-elevated: 0 16px 64px -16px hsl(220 27% 4% / 0.7);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-inter antialiased;
+    background: hsl(var(--background));
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+/* Custom components */
+@layer components {
+  .surface {
+    @apply bg-surface border border-border rounded-lg;
+    box-shadow: var(--shadow-card);
+  }
+
+  .surface-elevated {
+    @apply bg-surface-elevated border border-border rounded-lg;
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-effect {
+    box-shadow: var(--shadow-primary);
+  }
+}

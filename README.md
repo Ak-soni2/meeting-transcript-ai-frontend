@@ -1,73 +1,89 @@
-# Welcome to your Lovable project
+# AI Meeting Summarizer
 
-## Project info
+## Live Demo
+**URL**: https://meeting-transcript-ai-frontend.vercel.app/
 
-**URL**: https://lovable.dev/projects/e058f8e4-5bb9-4f29-8e2a-cb8632e3c79d
+## Project Overview
+AI Meeting Summarizer is a modern web application that transforms meeting transcripts into concise, actionable summaries using artificial intelligence. Users can upload PDF transcripts or paste text directly, and receive AI-generated summaries that can be easily shared via email.
 
-## How can I edit this code?
+## Features
+- 📝 PDF transcript upload and processing
+- 🤖 AI-powered meeting summarization
+- 📧 Email sharing functionality
+- ✨ Customizable AI prompts
+- 🎨 Modern, responsive UI
+- 🌙 Dark/Light mode support
 
-There are several ways of editing your application.
+## Tech Stack
+### Frontend
+- **Framework**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **UI Components**: shadcn/ui
+- **Styling**: Tailwind CSS
+- **State Management**: React Query
+- **Form Handling**: React Hook Form
+- **Icons**: Lucide React
+- **Date Handling**: date-fns
+- **Validation**: Zod
 
-**Use Lovable**
+### Backend
+- **Runtime**: Node.js
+- **Framework**: Express
+- **Database**: MongoDB
+- **AI Integration**: Google Gemini AI
+- **Email Service**: Nodemailer
+- **File Processing**: pdf-parse
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/e058f8e4-5bb9-4f29-8e2a-cb8632e3c79d) and start prompting.
+## Development Process
+1. **Planning & Design**
+   - Requirements analysis
+   - UI/UX design using shadcn/ui components
+   - API endpoint planning
 
-Changes made via Lovable will be committed automatically to this repo.
+2. **Implementation**
+   - Frontend setup with Vite and TypeScript
+   - Backend API development
+   - AI integration with Google Gemini
+   - PDF processing implementation
+   - Email service integration
 
-**Use your preferred IDE**
+3. **Testing & Optimization**
+   - Component testing
+   - API endpoint testing
+   - Performance optimization
+   - Error handling improvements
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Setup & Installation
+```bash
+# Clone the repository
+git clone [repository-url]
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# Install dependencies
+cd frontend
+npm install
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Environment Variables
+Create a `.env` file in the frontend directory:
+```properties
+VITE_API_URL=https://meeting-transcript-ai-backend.onrender.com/api
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Deployment
+- **Frontend**: Deployed on Vercel
+- **Backend**: Deployed on Render
+- **Database**: MongoDB Atlas
 
-**Use GitHub Codespaces**
+## Future Improvements
+- Real-time collaboration features
+- Advanced PDF parsing capabilities
+- Multiple language support
+- Meeting analytics dashboard
+- Custom AI model fine-tuning
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/e058f8e4-5bb9-4f29-8e2a-cb8632e3c79d) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)

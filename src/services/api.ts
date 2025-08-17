@@ -1,6 +1,6 @@
 // services/api.ts
 
-const API_BASE_URL = process.env.VITE_API_URL;
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 export interface Meeting {
   _id: string;
@@ -51,15 +51,22 @@ const handleError = async (response: Response) => {
 
 // Create a new meeting
 export const createMeeting = async (data: CreateMeetingData): Promise<Meeting> => {
+  console.log('Creating meeting with API URL:', API_BASE_URL); // Debug log
+  
   const response = await fetch(`${API_BASE_URL}/meetings`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
     },
+    credentials: 'include' as RequestCredentials,
     body: JSON.stringify(data),
   });
 
-  if (!response.ok) return handleError(response);
+  if (!response.ok) {
+    console.error('API Error:', response.status, response.statusText);
+    return handleError(response);
+  }
   return response.json();
 };
 
@@ -134,9 +141,13 @@ export const uploadPdf = async (file: File): Promise<PdfUploadResponse> => {
 
   const response = await fetch(`${API_BASE_URL}/meetings/upload-pdf`, {
     method: 'POST',
+    credentials: 'include',
     body: formData,
   });
 
-  if (!response.ok) return handleError(response);
+  if (!response.ok) {
+    console.error('Upload Error:', response.status, response.statusText);
+    return handleError(response);
+  }
   return response.json();
 };

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/card";
-import { Button } from "../components/ui/button";
-import { Textarea } from "../components/ui/textarea";
-import { Input } from "../components/ui/input";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
+import { Button } from "./ui/button";
+import { Textarea } from "./ui/textarea";
+import { Input } from "./ui/input";
 import { Brain, Mail, Sparkles, FileText, Upload, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import { useToast } from "../hooks/use-toast";
 import { createMeeting, generateSummary, shareMeetingSummary, uploadPdf } from "../services/api";

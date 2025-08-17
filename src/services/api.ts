@@ -1,4 +1,6 @@
-const API_BASE_URL = process.env.VITE_API_URL || 'http://localhost:5000/api';
+// services/api.ts
+
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export interface Meeting {
   _id: string;
@@ -35,6 +37,18 @@ export interface PdfUploadResponse {
   numPages: number;
 }
 
+// Utility: handle fetch errors
+const handleError = async (response: Response) => {
+  let message = 'Request failed';
+  try {
+    const error = await response.json();
+    message = error.message || error.error || message;
+  } catch {
+    message = response.statusText || message;
+  }
+  throw new Error(message);
+};
+
 // Create a new meeting
 export const createMeeting = async (data: CreateMeetingData): Promise<Meeting> => {
   const response = await fetch(`${API_BASE_URL}/meetings`, {
@@ -45,32 +59,21 @@ export const createMeeting = async (data: CreateMeetingData): Promise<Meeting> =
     body: JSON.stringify(data),
   });
 
-  if (!response.ok) {
-    throw new Error('Failed to create meeting');
-  }
-
+  if (!response.ok) return handleError(response);
   return response.json();
 };
 
 // Get all meetings
 export const getMeetings = async (): Promise<Meeting[]> => {
   const response = await fetch(`${API_BASE_URL}/meetings`);
-  
-  if (!response.ok) {
-    throw new Error('Failed to fetch meetings');
-  }
-
+  if (!response.ok) return handleError(response);
   return response.json();
 };
 
 // Get a specific meeting
 export const getMeeting = async (id: string): Promise<Meeting> => {
   const response = await fetch(`${API_BASE_URL}/meetings/${id}`);
-  
-  if (!response.ok) {
-    throw new Error('Failed to fetch meeting');
-  }
-
+  if (!response.ok) return handleError(response);
   return response.json();
 };
 
@@ -84,10 +87,7 @@ export const updateMeeting = async (id: string, data: Partial<CreateMeetingData>
     body: JSON.stringify(data),
   });
 
-  if (!response.ok) {
-    throw new Error('Failed to update meeting');
-  }
-
+  if (!response.ok) return handleError(response);
   return response.json();
 };
 
@@ -97,9 +97,7 @@ export const deleteMeeting = async (id: string): Promise<void> => {
     method: 'DELETE',
   });
 
-  if (!response.ok) {
-    throw new Error('Failed to delete meeting');
-  }
+  if (!response.ok) return handleError(response);
 };
 
 // Generate summary for a meeting
@@ -112,26 +110,21 @@ export const generateSummary = async (id: string, customPrompt?: string): Promis
     body: JSON.stringify({ customPrompt }),
   });
 
-  if (!response.ok) {
-    throw new Error('Failed to generate summary');
-  }
-
+  if (!response.ok) return handleError(response);
   return response.json();
 };
 
 // Share meeting summary via email
-export const shareMeetingSummary = async (id: string, emails: string[]): Promise<void> => {
+export const shareMeetingSummary = async (id: string, recipients: string[]): Promise<void> => {
   const response = await fetch(`${API_BASE_URL}/meetings/${id}/share`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ recipients: emails }), // Changed from 'emails' to 'recipients'
+    body: JSON.stringify({ recipients }),
   });
 
-  if (!response.ok) {
-    throw new Error('Failed to share meeting summary');
-  }
+  if (!response.ok) return handleError(response);
 };
 
 // Upload PDF and create meeting
@@ -144,17 +137,6 @@ export const uploadPdf = async (file: File): Promise<PdfUploadResponse> => {
     body: formData,
   });
 
-  if (!response.ok) {
-    let errorMessage = 'Failed to upload PDF';
-    try {
-      const errorData = await response.json();
-      errorMessage = errorData.message || errorData.error || errorMessage;
-    } catch (e) {
-      // If error response is not JSON, use status text
-      errorMessage = response.statusText || errorMessage;
-    }
-    throw new Error(errorMessage);
-  }
-
+  if (!response.ok) return handleError(response);
   return response.json();
 };

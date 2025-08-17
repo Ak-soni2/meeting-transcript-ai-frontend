@@ -126,7 +126,7 @@ export const shareMeetingSummary = async (id: string, emails: string[]): Promise
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ emails }),
+    body: JSON.stringify({ recipients: emails }), // Changed from 'emails' to 'recipients'
   });
 
   if (!response.ok) {

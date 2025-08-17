@@ -52,6 +52,7 @@ const MeetingSummarizer = () => {
       const response = await uploadPdf(file);
       
       console.log('✅ PDF upload successful:', response);
+      console.log('📋 Response structure:', JSON.stringify(response, null, 2));
       
       // Set the transcript from the uploaded PDF
       setTranscript(response.meeting.transcript);
@@ -66,7 +67,10 @@ const MeetingSummarizer = () => {
 
       // Auto-generate summary after successful upload
       if (response.meeting.id) {
+        console.log('🔄 Auto-generating summary for meeting:', response.meeting.id);
         await handleGenerateSummary(response.meeting.id);
+      } else {
+        console.warn('⚠️ No meeting ID received from upload response');
       }
 
     } catch (error) {
@@ -97,9 +101,11 @@ const MeetingSummarizer = () => {
 
     try {
       let targetMeetingId = meetingId;
+      console.log('🔄 Starting summary generation for meeting ID:', targetMeetingId);
 
       // If no meeting ID provided, create a new meeting first
       if (!targetMeetingId) {
+        console.log('📝 Creating new meeting for transcript');
         const meeting = await createMeeting({
           title: "Meeting Summary",
           transcript: transcript,
@@ -111,13 +117,16 @@ const MeetingSummarizer = () => {
 
         targetMeetingId = meeting._id;
         setCurrentMeetingId(meeting._id);
+        console.log('✅ New meeting created with ID:', targetMeetingId);
       }
 
       // Then generate the summary
+      console.log('🤖 Generating summary with prompt:', customPrompt);
       const updatedMeeting = await generateSummary(targetMeetingId, customPrompt);
 
       if (updatedMeeting.summary) {
         setSummary(updatedMeeting.summary);
+        console.log('✅ Summary generated successfully, length:', updatedMeeting.summary.length);
         toast({
           title: "Summary generated",
           description: "Meeting summary has been generated successfully.",
@@ -126,10 +135,15 @@ const MeetingSummarizer = () => {
         throw new Error('No summary generated');
       }
     } catch (error) {
-      console.error('Error generating summary:', error);
+      console.error('❌ Error generating summary:', error);
+      console.error('🔍 Error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        meetingId: meetingId,
+        transcriptLength: transcript.length
+      });
       toast({
         title: "Error",
-        description: "Failed to generate meeting summary. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to generate meeting summary. Please try again.",
         variant: "destructive",
       });
     } finally {
